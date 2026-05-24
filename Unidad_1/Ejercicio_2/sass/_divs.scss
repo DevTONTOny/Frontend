@@ -1,0 +1,8 @@
+@use 'mixins' as *;
+.div1{
+    @include customdiv(125px,10%,blue, orange)
+}
+
+.div2{
+    @include customdiv(200px,200px,green,black)
+}

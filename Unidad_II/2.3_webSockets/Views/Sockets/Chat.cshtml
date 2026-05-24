@@ -1,0 +1,40 @@
+<div class="row">
+<div class="col-6">
+        <input type="text" id="txtMensaje" class="form-control" autocomplete="off"/>
+        <button id="btnEnviar" class="btn btn-dark mt-3">Enviar</button>
+</div>
+</div>
+
+<div class="row">
+<div class="col-6">
+<div id="contenedor"></div>
+</div>
+</div>
+
+<script src=https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/9.0.6/signalr.min.js></script>
+<script>
+    const conexion = new signalR.HubConnectionBuilder()
+        .withUrl("/MapacheWebSocketServer")
+        .build();
+
+    conexion.start().then(function(e){
+        console.log("Conectado");
+    }).catch((e) => {
+        console.log("Error al conectarse");
+        console.log(e);
+    });
+
+    btnEnviar.addEventListener("click", () => {
+        conexion.invoke("SendMessage", txtMensaje.value);
+    });
+
+    conexion.on("Enviar", function (msg) {
+            const p = document.createElement("p");
+            p.innerHTML = "Mensaje: " + msg;
+            contenedor.appendChild(p); 
+        });
+
+        conexion.on("IngresoUsuario", function () {
+            alert("Ingreso un nuevo usuario");
+        });
+</script>

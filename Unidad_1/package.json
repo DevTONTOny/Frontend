@@ -1,0 +1,16 @@
+{
+  "name": "unidad_1",
+  "version": "1.0.0",
+  "description": "Unidad 1 de la materia de desarrollo en FrontEnd",
+  "license": "ISC",
+  "author": "Antony Daniel Munoz Leal",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "scss": "sass ./Examen/sass/main.scss ./Examen/css/main.css"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.3"
+  }
+}

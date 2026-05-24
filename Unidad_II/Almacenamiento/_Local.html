@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="container">
+        <span id="counter">
+
+        </span>
+    </div>
+
+    <script>
+        const counterTag = document.getElementById('counter');
+        let counter= localStorage.getItem('counter') || 0;
+        counter++;
+        localStorage.setItem('counter', counter);
+        counterTag.innerText = counter;
+    </script>
+</body>
+</html>

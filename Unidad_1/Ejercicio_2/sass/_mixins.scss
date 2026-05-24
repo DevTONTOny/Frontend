@@ -1,0 +1,6 @@
+@mixin customdiv ($w, $h, $c, $b){
+    width: $w;
+    height: $h;
+    color: $c;
+    background-color: $b;
+}

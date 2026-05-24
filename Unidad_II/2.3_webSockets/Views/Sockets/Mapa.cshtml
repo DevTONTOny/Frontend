@@ -1,0 +1,36 @@
+<div id="map"></div>
+<style>
+    #map {
+        height: 600px;
+        width: 800px;
+    }
+</style>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/9.0.6/signalr.min.js></script>
+<script>
+    const conexion = new signalR.HubConnectionBuilder()
+        .withUrl("/MapacheWebSocketServer")
+        .build();
+
+    conexion.start().then(function (e) {
+        console.log("Conectado");
+    }).catch((e) => {
+        console.log("Error al conectarse");
+        console.log(e);
+    });
+
+    const map = L.map('map').setView([51.505, -0.09], 13);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+    conexion.on("Enviar_Usuario", (nombre, lat, lon) => {
+        console.log("recibido: " + nombre + " " + lat +  " " + lon);
+
+        map.setView([lat, lon], 17);
+
+        let marker = L.marker([lat, lon]).addTo(map);
+        marker.bindPopup("<b>" + nombre + "</b>" + "<b><br>Latitud: " + lat + "</b><br><b>longitud: " + lon).openPopup();
+    });
+</script>

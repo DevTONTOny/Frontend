@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Document</title>
+</head>
+<body id="body">
+    <nav class="navbar bg-dark mx-auto">
+  <form class="container-fluid justify-content-start">
+    <button class="btn btn-outline-success me-2" id="btnNav" type="button">Agregar</button>
+    <button class="btn btn-sm btn-outline-secondary" id="btnReset"type="button">Reiniciar</button>
+  
+  </form>
+</nav>
+    <div style="position: relative; height: 60vh; width: 50vw">
+        <canvas id="estadisticas">
+        </canvas>
+        
+    </div>
+    <div class="text-center text-white py-4 mt-5 bg-dark">   
+    <button id="btnAgregar" type="button" class="btn btn-outline-primary mx-auto">Agregar persona</button>
+    <br/>
+    <label id="mujeres"></label>
+    <br/>
+    <label id="hombres"></label>
+    </div>
+    <script src="../node_modules/chart.js/dist/chart.umd.min.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>

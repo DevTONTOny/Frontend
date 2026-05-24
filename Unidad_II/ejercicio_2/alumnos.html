@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body id ="body">
+    
+    <label for="select">Carrera</label>
+    <input type="text" id="carrera">
+    <select id="selectCarrera">
+    <br />
+    <label for="inscritos">Alumnos inscritos</label>
+    <input type="text" id="inscritos">
+    <br />
+    <button id="btnGraficar">Agregar</button>
+    <br />
+    <button id="btnAgregarCarrera">Agregar carrera</button>
+    <div style="position: relative; height: 40vh; width: 50vw">
+        <canvas id="estadisticas">
+
+        </canvas>
+        
+    </div>
+    <script src="../node_modules/chart.js/dist/chart.umd.min.js"></script>
+    <script src="alumnos.js"></script>
+</body>
+</html>

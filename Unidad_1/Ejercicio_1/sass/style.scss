@@ -1,0 +1,20 @@
+$num: 1;
+$tam: 30px;
+$tiempo: 2s;
+
+//cadenas
+$nombre: "tony";
+$color: black;
+
+//colores
+$rojo: red;
+$color_rgb: rgb(100, 192, 81);
+$color_hex: #2f7060;
+
+$sexo: "H";
+$ancho: 80%;
+
+body{
+    @if    $sexo == "H"{background-color: blue;}
+    @else {background-color: pink;}
+}

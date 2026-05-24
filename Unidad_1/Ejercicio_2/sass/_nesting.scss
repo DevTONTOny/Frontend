@@ -1,0 +1,10 @@
+@use 'variables' as *;
+h2{
+    color:$primary;
+}
+div{
+    h2{
+        color: blue;
+    }
+    border: $borde;
+}

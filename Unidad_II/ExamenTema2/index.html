@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="txtId" />
+    <br>
+    <button id="buscar">buscar</button>
+    <br>
+    <div id = 'contenedor'></div>
+    <br>
+    <button id="agregar">Agregar</button>
+    <script src=https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/9.0.6/signalr.min.js></script>
+    <script>
+        const conexion = new signalR.HubConnectionBuilder()
+            .withUrl("http://localhost:5063/MapacheWebSocketServer", { withCredentials: false })
+            .build();
+
+        conexion.start().then(function (e) {
+            console.log("Conectado");
+        }).catch((e) => {
+            console.log("Error al conectarse");
+            console.log(e);
+        });
+        const btnEnviar = document.getElementById("agregar");
+
+        const imagen = document.createElement("img");
+        const nombre = document.createElement("h2");
+        const latitud = document.createElement("h4");
+        const longitud = document.createElement("h4");
+        const contenedor = document.getElementById("contenedor");
+        
+        async function buscarUsuario() {
+        const txtId = document.getElementById("txtId");
+        const id = parseInt(txtId.value);
+        const response = await fetch('http://localhost:5063/api/Examen/' + id);
+        const data = await response.json();
+        imagen.src = data.photo;
+        nombre.textContent = data.name;
+        latitud.textContent = data.latitude;
+        longitud.textContent = data.longitude;
+        console.log("Enviado");
+
+        contenedor.appendChild(nombre);
+        contenedor.appendChild(latitud);
+        contenedor.appendChild(longitud);
+        contenedor.appendChild(imagen);
+
+
+        
+        }
+
+        const btnBuscar = document.getElementById("buscar");
+        btnBuscar.addEventListener("click", ()=>{
+            buscarUsuario();
+            console.log("click");
+        })
+
+       async function enviar(){
+        
+        const txtId = document.getElementById("txtId");
+        const id = parseInt(txtId.value);
+        const response = await fetch('http://localhost:5063/api/Examen/' + id);
+        const data = await response.json();
+        const lat = data.latitude;
+        const lon = data.longitude;
+        const nombre = data.name;
+        console.log(data.name);
+        conexion.invoke("SendUsuario", nombre, parseFloat(lat), parseFloat(lon));
+
+            console.log('enviado');
+        }
+
+        btnEnviar.addEventListener("click", 
+            ()=>{
+                enviar();
+                console.log("click");
+            }
+        );
+        
+    </script>
+</body>
+
+</html>

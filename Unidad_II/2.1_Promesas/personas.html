@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="contenedor">
+        <script>
+            async function getPersonas(){
+               const response = await fetch("http://localhost:5044/api/personas")
+               const json = await response.json();
+               const contenedor = document.getElementById("contenedor");
+               const ul = document.createElement("ul");
+               json.forEach(function(item) {
+                if(item.genero == "Femenino"){
+                const li = document.createElement("li");
+                li.textContent = item.nombre + " " + item.edad + " " + item.genero;
+                ul.appendChild(li);
+                }
+               });
+                contenedor.appendChild(ul);
+               alert("Fin de la función");
+            }
+            getPersonas();
+        </script>
+    </div>
+</body>
+</html>

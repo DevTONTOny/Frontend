@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+</head>
+
+<body>
+    <div id="contenedor">
+        <span id="guardados">Usuarios recibidos:</span>
+    </div>
+    <div id="map"></div>
+    <style>
+        #map {
+            height: 600px;
+            width: 800px;
+        }
+    </style>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="*"></script>
+    <script src=https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/9.0.6/signalr.min.js></script>
+    <script>
+        const conexion = new signalR.HubConnectionBuilder()
+            .withUrl("http://localhost:5063/MapacheWebSocketServer", { withCredentials: false })
+            .build();
+
+        conexion.start().then(function (e) {
+            console.log("Conectado");
+        }).catch((e) => {
+            console.log("Error al conectarse");
+            console.log(e);
+        });
+
+        const map = L.map('map').setView([20, 0], 2);
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        const guardadosStorage = JSON.parse(localStorage.getItem("guardadosStorage")) || [];
+        const contenedor = document.getElementById("contenedor");
+        const usuariosStorage = JSON.parse(localStorage.getItem("usuariosStorage")) || [];
+        function showUsers() {
+            contenedor.innerHTML = "";
+            for (let index = 0; index < usuariosStorage.length; index++) {
+                
+                const marker = L.marker([usuariosStorage[index].lat, usuariosStorage[index].lon]).addTo(map);
+
+
+                marker.bindPopup("Nombre: "+ usuariosStorage[index].nombre+"<b><br>Latitud: " + usuariosStorage[index].lat + "</b><br><b>longitud: " + usuariosStorage[index].lat).openPopup();
+
+            }
+            console.log("Cargados del storage");
+        }
+        conexion.on("Enviar_Usuario", (nombre, lat, lon) => {
+            console.log("recibido: " + nombre + " " + lat + " " + lon);
+            const lblNombre = document.createElement("h2");
+            const lblLatitud = document.createElement("h4");
+            const lblLongitud = document.createElement("h4");
+
+            lblNombre.textContent = nombre;
+            lblLatitud.textContent = lat;
+            lblLongitud.textContent = lon;
+            contenedor.appendChild(lblNombre);
+            contenedor.appendChild(lblLatitud)
+            contenedor.appendChild(lblLongitud);
+            guardadosStorage.push(nombre + " " + lat + " " + lon)
+            usuariosStorage.push({ lat, lon });
+            console.log("recibido: " + nombre + " " + lat + " " + lon);
+
+            usuariosStorage.push({ lat, lon, nombre });
+            const marker = L.marker([lat, lon]).addTo(map);
+
+
+            marker.bindPopup("<b>" + nombre + "</b>" + "<b><br>Latitud: " + lat + "</b><br><b>longitud: " + lon).openPopup();
+            localStorage.setItem("guardadosStorage", JSON.stringify(guardadosStorage));
+            localStorage.setItem("usuariosStorage", JSON.stringify(usuariosStorage));
+            console.log(guardadosStorage);
+            console.log(usuariosStorage);
+        });
+        showUsers();
+
+    </script>
+</body>
+
+</html>

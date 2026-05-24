@@ -1,0 +1,63 @@
+<div style="position: relative; height: 40vh; width: 80vw">
+    <canvas id="estadisticas"></canvas>
+</div>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/9.0.6/signalr.min.js></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.0/chart.umd.min.js"></script>
+
+<script>
+    const names = ["Generos"];
+    const conexion = new signalR.HubConnectionBuilder()
+        .withUrl("/MapacheWebSocketServer")
+        .build();
+    conexion.start().then(function (e) {
+        console.log("Conectado");
+    }).catch((e) => {
+        console.log("Error al conectarse");
+        console.log(e);
+    });
+    const ctx = document.getElementById("estadisticas").getContext("2d");
+    let hombres = [];
+    let mujeres = [];
+    const data = {
+        labels: names,
+        datasets: [{
+            label: "Total hombres",
+            data: hombres,
+            backgroundColor: ["rgba(219,99,123)"],
+            borderColor: ["rgba(219,99,123)"],
+            borderWidth: 2
+        },
+        {
+            label: "Total mujeres",
+            data: mujeres,
+            backgroundColor: ["rgba(219,99,123)"],
+            borderColor: ["rgba(219,99,123)"],
+            borderWidth: 2
+        }
+        ]
+    }
+    const config = {
+        type: "bar",
+        data: data,
+        options: {
+            responsive: true
+        },
+    };
+    const generos = new Chart(ctx, config);
+
+    conexion.on("Enviar_Genero", (value) => {
+        const op = parseInt(value);
+        if(op == 1){
+            hombres.push(0);
+            hombres[0] += 1;
+            generos.data.datasets[0].data = hombres;
+        }else{
+            mujeres.push(0);
+            mujeres[0] += 1;
+            generos.data.datasets[1].data = mujeres;
+        }
+        generos.update();
+        console.log("a")
+    });
+
+</script>

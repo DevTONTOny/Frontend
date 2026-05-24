@@ -1,0 +1,40 @@
+
+@use "variables";
+
+@use "../../node_modules/bootstrap/scss/bootstrap" as *;
+
+.navbar-custom {
+  background-color: variables.$navbar-bg-color;
+}
+
+.container-gray{
+    background-color: variables.$gray;
+}
+
+.container-white{
+    background-color: variables.$white;
+}
+
+
+
+.h2-blue{
+  background-color: variables.$blue;
+  color: white;
+  text-align: center;
+}
+.container-back-industrial {
+  background-image: url("../Assets/backIndustrial.png");
+  background-size: cover;         
+  background-position: center;    
+  background-repeat: no-repeat;   
+}
+
+.container-rounded{
+  align-content: round($number: 0);
+}
+
+.alert-custom-primary{
+  background-color: variables.$primary;
+  color: white;
+  text-align: center;
+}

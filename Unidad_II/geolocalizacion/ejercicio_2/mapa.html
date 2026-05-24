@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+</head>
+
+<body>
+    <div id="map"></div>
+    <style>
+        #map {
+            height: 600px;
+            width: 800px;
+        }
+    </style>
+    <button onclick="obtenerPersona()">Agregar persona</button>
+    <br />
+    <button onclick="dibujar()">Dibujar</button>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script>
+
+
+        // function onMapClick(e) {
+        //     let marker1 = L.marker(e.latlng).addTo(map);
+        //     marker1.bindPopup( "Ubicación: "+e.latlng.toString()).openPopup();
+        //      var circle = L.circle(e.latlng, {
+        //     color: 'red',
+        //     fillColor: '#f03',
+        //     fillOpacity: 0.5,
+        //     radius: 50
+        // }).addTo(map);
+        // }
+        // map.on('click', onMapClick);
+        // console.log("hecho");
+        const map = L.map('map').setView([51.505, -0.09], 13);
+        const coords = [];
+        function onMapClick(e) {
+            coords.push(e.latlng);
+        }
+        map.on('click', onMapClick);
+        function dibujar() {
+            var polygon = L.polygon(coords
+            ).addTo(map);
+            for (let i = 0; i < coords.length; i++) {
+                let markDraw = L.marker(coords[i]).addTo(map);
+            }
+            coords = [];
+        }
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+        async function obtenerPersona() {
+            const response = await fetch('https://randomuser.me/api/');
+            const data = await response.json();
+            const persona = data.results[0];
+            console.log(persona);
+            const nombre = persona.name.first + " " + persona.name.last;
+            const genero = persona
+            map.setView([persona.location.coordinates.latitude, persona.location.coordinates.longitude], 17);
+
+            let marker = L.marker([persona.location.coordinates.latitude, persona.location.coordinates.longitude]).addTo(map);
+
+
+
+
+            marker.bindPopup("<b>" + nombre + "</b>" + "<b><br>Latitud: " + persona.location.coordinates.latitude + "</b><br><b>longitud: " + persona.location.coordinates.longitude).openPopup();
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="btnChange">Cambiar tema</button>
+    <script>
+        let tema = localStorage.getItem('theme') || 'light';
+        function changeTheme() {
+            document.body.style.color = tema === 'light' ? 'white' : 'black';
+            document.body.style.backgroundColor = tema === 'light' ? 'black' : 'white';
+        }
+
+        btnChange.addEventListener('click', () => {
+            tema = tema === 'light' ? 'dark' : 'light';
+            localStorage.setItem('theme', tema);
+            changeTheme();
+        });
+    </script>
+</body>
+
+</html>

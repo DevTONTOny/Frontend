@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="btnElotes">Get Elotes</button>
+    <script>
+        const btnElotes = document.getElementById("btnElotes");
+        btnElotes.addEventListener("click", () => {
+            EjemploFetch();
+        });
+        function EjemploFetch(){
+            fetch("http://localhost:5044/api/Elotes")
+            .then(response => response.json())
+            .catch(error => alert("Error al procesar " + error))
+            .then(json => {
+                alert(json[3]);
+            });
+        }
+       
+    </script>
+</body>
+</html>

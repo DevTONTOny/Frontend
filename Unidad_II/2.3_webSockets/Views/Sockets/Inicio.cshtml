@@ -1,0 +1,8 @@
+<input typw="text" class="form-control" id="txtNombre" autocomplete="off"/>
+<button id="btnIngresar" class="btn btn-info">Ingresar</button>
+
+<script>
+btnIngresar.addEventListener("click",() => {
+    location.href = "Chat?Usuario=" + txtNombre.value;
+})
+</script>

@@ -1,0 +1,8 @@
+@use 'variables';
+@use 'mixins';
+@use 'divs';
+@use 'nesting';
+
+body{
+    color: rgb(150, 200, 10);
+}

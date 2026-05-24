@@ -1,0 +1,37 @@
+<button class="btn btn-primary" id="btnEnviarHombre">Enviar hombre</button>
+<button class="btn btn-success" id="btnEnviarMujer">Enviar mujer</button>
+<div id="contenedor"></div>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/9.0.6/signalr.min.js></script>
+<script>
+    const hombres = [];
+    const mujeres = [];
+    const conexion = new signalR.HubConnectionBuilder()
+        .withUrl("/MapacheWebSocketServer")
+        .build();
+
+    conexion.start().then(function(e){
+        console.log("Conectado");
+    }).catch((e) => {
+        console.log("Error al conectarse");
+        console.log(e);
+    });
+
+    btnEnviarHombre.addEventListener("click", () => {
+        conexion.invoke("SendGender", 1);
+        console.log("Enviado");
+        hombres.push(1);
+        console.log(hombres.length);
+    })
+
+btnEnviarMujer.addEventListener("click", () => {
+        conexion.invoke("SendGender", 2);
+        console.log("Enviada");
+        mujeres.push(2);
+        console.log(mujeres.length);
+    })
+    conexion.on("Enviar_Genero", function(h) {
+        const p = document.createElement("p");
+        p.innerHTML = h;
+        contenedor.appendChild(p);
+    });
+</script>

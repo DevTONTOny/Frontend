@@ -1,0 +1,30 @@
+.div1 {
+  width: 75px;
+  height: 10%;
+  color: purple;
+  background-color: orange;
+}
+
+.div2 {
+  width: 50px;
+  height: 25px;
+  color: green;
+  background-color: gray;
+}
+
+h2 {
+  color: red;
+}
+
+div {
+  border: 10px dashed orange;
+}
+div h2 {
+  color: blue;
+}
+
+body {
+  color: rgb(150, 200, 10);
+}
+
+/*# sourceMappingURL=style.css.map */

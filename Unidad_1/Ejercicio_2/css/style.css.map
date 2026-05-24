@@ -1,0 +1,1 @@
+{"version":3,"sourceRoot":"","sources":["../sass/_divs.scss","../sass/_mixins.scss","../sass/_nesting.scss","../sass/_variables.scss","../sass/main.scss"],"names":[],"mappings":"AACA;ECAI,ODC0B;ECA1B;EACA,ODDmC;ECEnC,kBDF2C;;;AAG/C;ECJI,ODK0B;ECJ1B,QDI+B;ECH/B,ODGoC;ECFpC,kBDE0C;;;AEL9C;EACI,OCDM;;;ADGV;EAII,QCNI;;ADGJ;EACI;;;AEDR;EACI","file":"style.css"}
